@@ -26,7 +26,7 @@
   "scripts": {
     "build-dev": "set NODE_ENV=development&&webpack",
     "build-prod": "set NODE_ENV=production&&webpack",
-    "watch": "webpack --watch"
+    "watch": "set NODE_ENV=development&&webpack --watch"
   },
   "repository": {
     "type": "git",

@@ -1,19 +1,20 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const mode = 'production';
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 let config = {
-    mode,
-
+    mode: process.env.NODE_ENV,
     entry: {
-        index: ["./src/main.js", "./src/sass/style.scss"]
+        index: ["./src/main.js", "./src/sass/style.scss"],
+        confirmation: ["./src/pages/confirmation.js", "./src/pages/confirmation.scss"],
+        panier: ["./src/pages/panier.js", "./src/pages/panier.scss"],
+        produit: ["./src/pages/produit.js", "./src/pages/produit.scss"]
     },
     output: {
         path: path.resolve(__dirname, "./dist"),
-        filename: "./main.js"
+        filename: "[name].js"
     },
-
     module: {
         rules: [
             {
@@ -29,15 +30,16 @@ let config = {
             {
                 test: /\.scss$/,
                 use: [
-                    process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader',
+                    process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'
                 ],
             },
         ],
     },
     plugins: [
+        // new CleanWebpackPlugin(), // <-- only for production
         new HtmlWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'style.css',
+            filename: '[name].css',
         }),
     ],
 };
